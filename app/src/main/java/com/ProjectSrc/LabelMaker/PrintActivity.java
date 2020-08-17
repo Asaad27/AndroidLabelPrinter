@@ -1,27 +1,16 @@
-package com.example.topdf;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.ProjectSrc.LabelMaker;
 
 import android.app.Activity;
-import android.app.UiAutomation;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Base64;
 import android.util.Log;
-import android.view.accessibility.AccessibilityEvent;
-import android.widget.Toast;
 
-import com.example.topdf.R;
-import com.intermec.print.PrinterException;
 import com.intermec.print.lp.LinePrinter;
 import com.intermec.print.lp.LinePrinterException;
 import com.intermec.print.lp.PrintProgressEvent;
 import com.intermec.print.lp.PrintProgressListener;
-import com.intermec.print.*;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import static android.content.ContentValues.TAG;

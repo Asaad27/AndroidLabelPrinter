@@ -1,10 +1,8 @@
-package com.example.topdf;
+package com.ProjectSrc.LabelMaker;
 
 import android.graphics.Bitmap;
-import android.widget.Toast;
 
 import java.io.Serializable;
-import java.io.SerializablePermission;
 import java.util.LinkedList;
 
 public class DataList implements Serializable

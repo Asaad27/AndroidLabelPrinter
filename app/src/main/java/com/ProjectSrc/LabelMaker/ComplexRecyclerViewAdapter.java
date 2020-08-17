@@ -1,4 +1,4 @@
-package com.example.topdf;
+package com.ProjectSrc.LabelMaker;
 
 import android.annotation.SuppressLint;
 import android.text.Html;
@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
-
-import java.util.List;
 
 public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
@@ -48,7 +45,7 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                 break;
             case 5:
                 View v5 = inflater.inflate(R.layout.layout5, parent, false);
-                viewHolder = new com.example.topdf.ViewHolder5(v5);
+                viewHolder = new com.ProjectSrc.LabelMaker.ViewHolder5(v5);
                 break;
             case 0:
                 View v = inflater.inflate(R.layout.layout, parent, false);

@@ -1,9 +1,8 @@
-package com.example.topdf;
+package com.ProjectSrc.LabelMaker;
 
 import android.graphics.Bitmap;
 
 import java.io.Serializable;
-import java.net.URI;
 
 public class Label implements Serializable
 {

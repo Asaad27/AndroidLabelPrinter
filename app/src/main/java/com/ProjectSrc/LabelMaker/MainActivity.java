@@ -1,6 +1,5 @@
-package com.example.topdf;
+package com.ProjectSrc.LabelMaker;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -23,11 +22,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.pdf.PdfDocument;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
-import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,8 +34,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -47,7 +41,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
-import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -262,7 +255,7 @@ public class MainActivity extends AppCompatActivity
 
         final EditText input = (EditText) viewInflated.findViewById(R.id.input);
         input.setText(string);
-        // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+        // Specify the type of input expected; this, for ProjectSrc, sets the input as a password, and will mask the text
         builder.setView(viewInflated);
 
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
