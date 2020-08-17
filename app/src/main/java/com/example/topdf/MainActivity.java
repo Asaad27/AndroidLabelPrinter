@@ -193,8 +193,8 @@ public class MainActivity extends AppCompatActivity
         }
         else if (requestCode == BLUETOOTH_REQUEST_CODE)
         {
-            assert data != null;
-            this.string = (String) data.getStringExtra("code");
+            if (data != null)
+                this.string = (String) data.getStringExtra("code");
             printBitmap(null);
 
         }
