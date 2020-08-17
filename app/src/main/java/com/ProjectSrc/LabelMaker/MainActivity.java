@@ -275,7 +275,7 @@ public class MainActivity extends AppCompatActivity
                 dialog.cancel();
             }
         });
-        builder.setNeutralButton("afficher la liste", new DialogInterface.OnClickListener()
+        builder.setNeutralButton("Rechercher", new DialogInterface.OnClickListener()
         {
             @Override
             public void onClick(DialogInterface dialogInterface, int i)

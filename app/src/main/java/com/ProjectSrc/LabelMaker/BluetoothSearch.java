@@ -32,6 +32,9 @@ public class BluetoothSearch extends AppCompatActivity
     private ArrayList<String> bluetoothAdresses = new ArrayList<>();
     private ArrayAdapter arrayAdapter;
     static final int IMAGING = BluetoothClass.Device.Major.IMAGING;
+    static final int COMPUTER = BluetoothClass.Device.Major.COMPUTER;
+    static final int PHONE = BluetoothClass.Device.Major.PHONE;
+    public static int REQUEST_BLUETOOTH = 1;
 
     private final BroadcastReceiver broadcastReceiver = new BroadcastReceiver()
     {
@@ -40,29 +43,37 @@ public class BluetoothSearch extends AppCompatActivity
         public void onReceive(Context context, Intent intent)
         {
             String action = intent.getAction();
-            Log.i("ACTION", action);
+            //Log.i("ACTION", action);
 
             if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action))
             {
-                textViewStatus.setText("recherche d'imprimantes terminée");
+                textViewStatus.setText("recherche terminée");
                 search.setEnabled(true);
             }
             else if (BluetoothDevice.ACTION_FOUND.equals(action))
             {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-
+                System.out.println("found");
                 String name = device.getName();
                 String adress = device.getAddress();
                 String rssi = Integer.toString(intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE));
                 //Log.i("device found", "Name : " + name + "Adress : " + adress + "RSSI : " + rssi);
                 String deviceString = "";
                 if (device.getBluetoothClass().getMajorDeviceClass() == IMAGING)
-                    deviceString += "Imprimante : ";
+                    deviceString += "Type : Imprimante - ";
+                else if (device.getBluetoothClass().getMajorDeviceClass() == COMPUTER)
+                    deviceString += "Type : Ordinateur - ";
+                else if (device.getBluetoothClass().getMajorDeviceClass() == PHONE)
+                    deviceString += "Type : Smartphone - ";
+                else
+                    deviceString += "Type : Autre - ";
 
-                if (name != null || name.equals(""))
+                if (name == null || name.equals(""))
                     deviceString = adress;
                 else
                     deviceString = name + " : " + adress;
+
+                deviceString += " - RSSI : " + rssi;
                 if (!bluetoothDevices.contains(deviceString))
                 {
                     bluetoothAdresses.add(adress);
@@ -70,6 +81,8 @@ public class BluetoothSearch extends AppCompatActivity
                 }
                 arrayAdapter.notifyDataSetChanged();
             }
+            else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(action))
+                textViewStatus.setText("recherche en cours");
         }
     };
 
@@ -84,49 +97,54 @@ public class BluetoothSearch extends AppCompatActivity
         textViewStatus = findViewById(R.id.textViewStatus);
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, bluetoothDevices);
-        btListView.setAdapter(arrayAdapter);
-
-        /*bluetoothDevices.add("test");
-        bluetoothAdresses.add("test2");*/
-        arrayAdapter.notifyDataSetChanged();
-        btListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
-            {
-                String string = bluetoothAdresses.get(i);
-                Intent newIntent = new Intent();
-                newIntent.putExtra("code", string);
-                setResult(RESULT_OK, newIntent);
-                finish();
-            }
-        });
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
-        intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
-        intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
-        intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-        registerReceiver(broadcastReceiver, intentFilter);
-
-
-    }
-
-    @SuppressLint("SetTextI18n")
-    public void searchButton(View view)
-    {
-        textViewStatus.setText("Entrain de rechercher...");
-        search.setEnabled(false);
-        bluetoothDevices.clear();
-        bluetoothAdresses.clear();
         if (bluetoothAdapter == null)
         {
             Toast.makeText(this, "bluetooth not supported", Toast.LENGTH_LONG).show();
             finish();
         }
         else
-            bluetoothAdapter.startDiscovery();
+        {
+            if (!bluetoothAdapter.isEnabled())
+            {
+                Intent enableBT = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                startActivityForResult(enableBT, REQUEST_BLUETOOTH);
+            }
+
+            arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, bluetoothDevices);
+            btListView.setAdapter(arrayAdapter);
+
+            arrayAdapter.notifyDataSetChanged();
+            btListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+            {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+                {
+                    String string = bluetoothAdresses.get(i);
+                    Intent newIntent = new Intent();
+                    newIntent.putExtra("code", string);
+                    setResult(RESULT_OK, newIntent);
+                    finish();
+                }
+            });
+
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+            intentFilter.addAction(BluetoothDevice.ACTION_FOUND);
+            intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_STARTED);
+            intentFilter.addAction(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+            registerReceiver(broadcastReceiver, intentFilter);
+
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    public void searchButton(View view)
+    {
+        search.setEnabled(false);
+        bluetoothDevices.clear();
+        bluetoothAdresses.clear();
+
+        bluetoothAdapter.startDiscovery();
+
     }
 }

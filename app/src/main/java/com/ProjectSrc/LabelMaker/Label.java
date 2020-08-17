@@ -30,8 +30,10 @@ public class Label implements Serializable
 
     public Bitmap getBitmap()
     {
-        assert bitmap != null;
-        return bitmap.getBitmap();
+        if (bitmap != null)
+            return bitmap.getBitmap();
+        else
+            return null;
     }
 
     public void setBitmap(ProxyBitmap bitmap)

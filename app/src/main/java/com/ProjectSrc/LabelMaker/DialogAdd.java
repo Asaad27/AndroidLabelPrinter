@@ -103,12 +103,14 @@ public class DialogAdd extends DialogFragment
                     title[i] = textOut.getText().toString();
                     text[i] = textOut2.getText().toString();
                 }
-                dataList.addNode(childCount, title, text);
-                MainActivity.complexRecyclerViewAdapter.notifyDataSetChanged();
+                if (childCount > 0)
+                {
+                    dataList.addNode(childCount, title, text);
+                    MainActivity.complexRecyclerViewAdapter.notifyDataSetChanged();
+                }
                 dismiss();
             }
         });
-
 
         return view;
     }

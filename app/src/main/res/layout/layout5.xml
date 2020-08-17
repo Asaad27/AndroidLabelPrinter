@@ -14,30 +14,35 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textSize="22sp"
         />
     <TextView
         android:id="@+id/field52"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textSize="22sp"
         />
     <TextView
         android:id="@+id/field53"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textSize="22sp"
         />
     <TextView
         android:id="@+id/field54"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textSize="22sp"
         />
     <TextView
         android:id="@+id/field55"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textSize="15sp"
         />
 
 </LinearLayout>
