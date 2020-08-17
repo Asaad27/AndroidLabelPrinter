@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:id="@+id/mainAddButton"
+        android:title=""
+        app:showAsAction="always"
+        android:icon="@drawable/baseline_add_white_24"
+        android:onClick="addButtonMenu"
+        />
+    <item
+        android:id="@+id/mainQrCode"
+        android:icon="@drawable/barcodeicone"
+        android:onClick="bareCodeActivity"
+        android:title=""
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/toPdf"
+        android:title="pdf"
+        app:showAsAction="always"
+        android:icon="@drawable/pdf"
+        android:onClick="toPdf"
+        />
+    <item
+        android:id="@+id/print"
+        app:showAsAction="always"
+        android:icon="@drawable/print"
+        android:onClick="printBitmap"
+        />
+</menu>

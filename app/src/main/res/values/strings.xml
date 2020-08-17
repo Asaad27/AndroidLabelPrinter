@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">toPdf</string>
+    <string name="modifier">modifier</string>
+    <string name="edit">Modifier</string>
+    <string name="supprimer">Supprimer</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="ajouter">Ajouter</string>
+    <string name="remove">Remove</string>
+    <string name="titre">Titre</string>
+    <string name="texte">Texte</string>
+    <string name="valider">Valider</string>
+    <string name="v">V</string>
+    <string name="ajouterplus">+</string>
+    <string name="supprimerx">x</string>
+    <string name="scannner_codaebare">Scannner CodaeBare</string>
+    <string name="g_nerer_codebar">Génerer CodeBar</string>
+    <string name="data">Data :</string>
+    <string name="upc_a">UPC A</string>
+    <string name="code128">Code128</string>
+    <string name="codabar">Codabar</string>
+    <string name="qrcode">QRCode</string>
+    <string name="xx_xx_xx_xx_xx_xx">XX:XX:XX:XX:XX:XX</string>
+    <string name="etiquettes">Etiquettes</string>
+    <string name="terminer">terminer</string>
+    <string name="rechercher">Rechercher</string>
+    <string name="statue">Statue</string>
+</resources>
