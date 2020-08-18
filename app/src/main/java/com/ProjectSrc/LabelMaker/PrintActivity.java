@@ -15,6 +15,9 @@ import java.io.File;
 
 import static android.content.ContentValues.TAG;
 
+/**
+ * API : https://support.honeywellaidc.com/s/article/Where-to-download-Intermec-printing-SDK-for-Android
+ */
 public class PrintActivity extends Activity
 {
     private LinePrinter  lp;

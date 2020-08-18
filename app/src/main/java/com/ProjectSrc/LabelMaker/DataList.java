@@ -4,6 +4,9 @@ import android.graphics.Bitmap;
 
 import java.io.Serializable;
 import java.util.LinkedList;
+/**
+ * DataList est une classe qui manipule la liste chainée mLinkedList, contenants des elements de la classe Label
+ */
 
 public class DataList implements Serializable
 {

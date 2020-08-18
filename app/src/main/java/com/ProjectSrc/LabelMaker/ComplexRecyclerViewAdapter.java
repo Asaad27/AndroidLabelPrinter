@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
+/**
+ * ComplexRecyclerViewAdapter est une version modifiée du recyclerViewAdapter, permettant de manipuler plusieurs layouts
+ */
 public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 {
     private DataList dataList;

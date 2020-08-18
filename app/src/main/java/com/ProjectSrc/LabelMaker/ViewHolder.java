@@ -6,6 +6,9 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * classe specifique au viewHolder contenant l'image du barcode
+ */
 public class ViewHolder extends RecyclerView.ViewHolder
 {
     private ImageView imageView;

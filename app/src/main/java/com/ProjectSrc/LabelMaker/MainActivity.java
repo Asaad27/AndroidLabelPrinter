@@ -42,6 +42,13 @@ import java.util.Objects;
 
 import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
 
+/**
+ * <h1>MainActivity</h1>
+ * @author  Asaad Belarbi
+ * @version 1.0
+ * @since   2020-08-14
+ */
+
 public class MainActivity extends AppCompatActivity
 {
 
@@ -78,12 +85,9 @@ public class MainActivity extends AppCompatActivity
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_WIFI_STATE}, 1);
         }
-        /*if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, 1);
-        }*/
+
         setContentView(R.layout.activity_main);
         setTitle("Etiquette");
-        //getActionBar().setIcon(R.drawable.my_icon);
 
         dataList = new DataList();
         rvDataList = findViewById(R.id.rvContacts);
@@ -110,6 +114,13 @@ public class MainActivity extends AppCompatActivity
                 });
     }
 
+    /**
+     * Cette methode fait appel au pop up "modifier, supprimer" lors du clique sur
+     * un element du recyclerView
+     *
+     * @param position recoit la position de l'element cliqué
+     *
+     */
     public void showPop(final int position)
     {
         Button bEdit, bDelete;
@@ -151,6 +162,11 @@ public class MainActivity extends AppCompatActivity
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * le button ajouter dans la barre de l'application
+     * permet d'ajouter un item
+     * il cree DalogFragement et lui envoit la liste chainée
+     */
     public void addButtonMenu(MenuItem item)
     {
         DialogFragment dialog = DialogAdd.newInstance();
@@ -160,7 +176,6 @@ public class MainActivity extends AppCompatActivity
         b.putSerializable("data", (Serializable) dataList);
         dialog.setArguments(b);
 
-        //Log.d(TAG, "addButtonMenu: " + dataList.getType(0));
     }
 
     public void bareCodeActivity(MenuItem item)
@@ -194,6 +209,10 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    /**
+     * Conversion du complexRecyclerView en Pdf
+     * la methode fait une Capture du ComplexRecyclerView en Bitmap puis le convertit en PDF
+     */
     public void toPdf(MenuItem item)
     {
         LinearLayout ll;
@@ -237,7 +256,9 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
+    /**
+     * Cette methode transforme le reyclerView en Bitmap et l'envoie à l'imprimante
+     */
     @SuppressLint("SetTextI18n")
     public void printBitmap(MenuItem item)
     {
@@ -291,7 +312,10 @@ public class MainActivity extends AppCompatActivity
         builder.show();
     }
 
-
+    /**
+     * Message du resultat de l'impression
+     * @param statue est un boolean false si il y'a eu des erreurs dans l'impression
+     */
     private void messageEnd(boolean statue)
     {
         Toast.makeText(this, (statue ? "impression en cours" : "erreur de connexion"), Toast.LENGTH_LONG).show();

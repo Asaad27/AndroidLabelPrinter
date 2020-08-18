@@ -18,6 +18,10 @@ import androidx.fragment.app.DialogFragment;
 
 import java.util.Objects;
 
+/**
+ *DialogAdd gere le fullscreen dialogfragment qui permet de modifier des donnees à l'etiquette
+ * ce fragement recoit la liste chainée dataList comme argument, la modifie et la repasse au MainActivity
+ */
 public class DialogEdit extends DialogFragment
 {
     DataList dataList;
@@ -118,6 +122,9 @@ public class DialogEdit extends DialogFragment
         return view;
     }
 
+    /**
+     *Cette methode remplit les champs a modifier
+     */
     private void onCreateAddViews()
     {
         int position = dataList.dialogEditRowPosition;

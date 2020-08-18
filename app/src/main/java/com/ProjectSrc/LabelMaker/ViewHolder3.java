@@ -6,6 +6,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * View holder avec 3 champs de texte
+ */
 public class ViewHolder3 extends RecyclerView.ViewHolder
 {
     private TextView field31, field32, field33;

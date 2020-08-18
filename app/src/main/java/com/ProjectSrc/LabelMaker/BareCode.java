@@ -20,6 +20,11 @@ import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
+/**
+ *BareCode utilise l'api zxing pour la generation des codebares
+ * lien : https://github.com/zxing/zxing/tree/master/core/src/main/java/com/google/zxing
+ */
+
 public class BareCode extends AppCompatActivity
 {
 

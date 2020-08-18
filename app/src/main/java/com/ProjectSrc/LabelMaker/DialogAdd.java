@@ -16,7 +16,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import java.util.Objects;
-
+/**
+ *DialogAdd gere le fullscreen dialogfragment qui permet l'ajout des donnees à l'etiquette
+ * ce fragement recoit la liste chainée dataList comme argument, la modifie et la repasse au MainActivity
+ */
 public class DialogAdd extends DialogFragment
 {
     DataList dataList;
@@ -40,7 +43,6 @@ public class DialogAdd extends DialogFragment
         {
             dataList = (DataList) getArguments().get("data");
             assert dataList != null;
-            //ystem.out.println("wach bant?");
         }
     }
 

@@ -22,6 +22,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ * BluetoothSearche permet la recherche bluetooth et l'affichage de la liste de periphériques
+ * lien de l'api : https://developer.android.com/guide/topics/connectivity/bluetooth
+ */
 public class BluetoothSearch extends AppCompatActivity
 {
     private ListView btListView;

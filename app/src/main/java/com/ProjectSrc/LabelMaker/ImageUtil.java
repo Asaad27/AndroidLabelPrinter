@@ -5,7 +5,9 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
-
+/**
+ *Cette classe convertit une image bitmap en base64 et l'inverse
+ */
 public class ImageUtil
 {
     public static Bitmap convert(String base64Str) throws IllegalArgumentException

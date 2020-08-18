@@ -3,15 +3,25 @@ package com.ProjectSrc.LabelMaker;
 import android.graphics.Bitmap;
 
 import java.io.Serializable;
+/**
+ * <h1>Label</h1>
+ * cette classe continent les noeuds, qui sont utilisées par la liste chainée dans la classe DataList
 
+ */
 public class Label implements Serializable
 {
-    private int numberOfElements;
+
+
     private int type;
     private String[] titles;
     private String[] userTexts;
     private ProxyBitmap bitmap;
 
+    /**
+     *Constructeur sans barcode
+     *@param titles les titres du champ
+     *@param userTexts les textes de chaque titre
+     */
     public Label(int type, String[] titles, String[] userTexts)
     {
         this.type = type;
@@ -19,7 +29,10 @@ public class Label implements Serializable
         this.userTexts = userTexts;
 
     }
-
+    /**
+     *Constructeur avec barcode
+     *@param bitmap  Les objets Bitmap doivent etres convertis en ProxyBitmap, pour permettre la serialization de la classe Label
+     */
     public Label(int type, String[] titles, String[] userTexts, ProxyBitmap bitmap)
     {
         this.type = type;

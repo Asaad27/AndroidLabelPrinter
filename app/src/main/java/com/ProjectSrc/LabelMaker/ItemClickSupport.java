@@ -4,6 +4,9 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ *ItemClickSupport ajouter la possibilite des cliques sur les elements du recyclerView
+ */
 public class ItemClickSupport
 {
     private final RecyclerView mRecyclerView;
