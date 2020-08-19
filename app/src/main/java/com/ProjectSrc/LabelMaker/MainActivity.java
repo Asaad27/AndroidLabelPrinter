@@ -13,17 +13,21 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.LruCache;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity
     private static final int BARCODE_REQUEST_CODE = 0;
     private static final int BLUETOOTH_REQUEST_CODE = 7 ;
     private Dialog mDialog;
+    private EditText elongeur, elargeur;
     private static DataList dataList;
     private String uri;
     private Bitmap screenBitmap;
@@ -213,15 +218,64 @@ public class MainActivity extends AppCompatActivity
      * Conversion du complexRecyclerView en Pdf
      * la methode fait une Capture du ComplexRecyclerView en Bitmap puis le convertit en PDF
      */
+    public Bitmap getScreenshotFromRecyclerView(RecyclerView view)
+    {
+        RecyclerView.Adapter adapter = view.getAdapter();
+        Bitmap bigBitmap = null;
+        if (adapter != null)
+        {
+            int size = adapter.getItemCount();
+            int height = 0;
+            Paint paint = new Paint();
+            int iHeight = 0;
+            final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+
+
+            final int cacheSize = maxMemory / 8;
+            LruCache<String, Bitmap> bitmaCache = new LruCache<>(cacheSize);
+            for (int i = 0; i < size; i++)
+            {
+                RecyclerView.ViewHolder holder = adapter.createViewHolder(view, adapter.getItemViewType(i));
+                adapter.onBindViewHolder(holder, i);
+                holder.itemView.measure(View.MeasureSpec.makeMeasureSpec(view.getWidth(), View.MeasureSpec.EXACTLY),
+                        View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+                holder.itemView.layout(0, 0, holder.itemView.getMeasuredWidth(), holder.itemView.getMeasuredHeight());
+                holder.itemView.setDrawingCacheEnabled(true);
+                holder.itemView.buildDrawingCache();
+                Bitmap drawingCache = holder.itemView.getDrawingCache();
+                if (drawingCache != null) {
+
+                    bitmaCache.put(String.valueOf(i), drawingCache);
+                }
+                height += holder.itemView.getMeasuredHeight();
+            }
+
+            bigBitmap = Bitmap.createBitmap(view.getMeasuredWidth(), height, Bitmap.Config.ARGB_8888);
+            Canvas bigCanvas = new Canvas(bigBitmap);
+            bigCanvas.drawColor(Color.WHITE);
+
+            for (int i = 0; i < size; i++) {
+                Bitmap bitmap = bitmaCache.get(String.valueOf(i));
+                bigCanvas.drawBitmap(bitmap, 0f, iHeight, paint);
+                iHeight += bitmap.getHeight();
+                bitmap.recycle();
+            }
+
+        }
+        return bigBitmap;
+    }
     public void toPdf(MenuItem item)
     {
-        LinearLayout ll;
+        elongeur = (EditText)findViewById(R.id.longeur);
+        elargeur = (EditText)findViewById(R.id.largeur);
+        Bitmap cs = getScreenshotFromRecyclerView(rvDataList);
 
-        ll = (LinearLayout)findViewById(R.id.linear);
-        ll.setDrawingCacheEnabled(true);
-        ll.buildDrawingCache(true);
-        Bitmap cs = Bitmap.createBitmap(ll.getDrawingCache());
-        ll.setDrawingCacheEnabled(false);
+        String slongeur = elongeur.getText().toString();
+        String slargeur =   elargeur.getText().toString();
+        int length = Integer.parseInt(elongeur.getText().toString());
+        int width = Integer.parseInt(elargeur.getText().toString());
+        if (length != 0 && width != 0)
+            cs = scaleBitmap(cs, width, length);
 
         PdfDocument pdfDocument = new PdfDocument();
         PdfDocument.PageInfo pi = new PdfDocument.PageInfo.Builder(cs.getWidth(), cs.getHeight(), 1).create();
@@ -252,6 +306,8 @@ public class MainActivity extends AppCompatActivity
         }
 
         pdfDocument.close();
+        openPdf("etiquette.pdf");
+
         Toast.makeText(this, "fichier  pdf géneré  dans le dossier : PDF FOLDER", Toast.LENGTH_LONG).show();
 
     }
@@ -262,13 +318,18 @@ public class MainActivity extends AppCompatActivity
     @SuppressLint("SetTextI18n")
     public void printBitmap(MenuItem item)
     {
-        LinearLayout ll;
+        elongeur = (EditText)findViewById(R.id.longeur);
+        elargeur = (EditText)findViewById(R.id.largeur);
+        screenBitmap = getScreenshotFromRecyclerView(rvDataList);
 
-        ll = (LinearLayout)findViewById(R.id.linear);
-        ll.setDrawingCacheEnabled(true);
-        ll.buildDrawingCache(true);
-        screenBitmap= Bitmap.createBitmap(ll.getDrawingCache());
-        ll.setDrawingCacheEnabled(false);
+        String slongeur = elongeur.getText().toString();
+        String slargeur =  elargeur.getText().toString();
+
+        int length = Integer.parseInt(elongeur.getText().toString());
+        int width = Integer.parseInt(elargeur.getText().toString());
+        if (length != 0 && width != 0)
+            screenBitmap = scaleBitmap(screenBitmap, width, length);
+
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Entrer l'Uri de l'imprimante");
@@ -276,7 +337,7 @@ public class MainActivity extends AppCompatActivity
 
         final EditText input = (EditText) viewInflated.findViewById(R.id.input);
         input.setText(string);
-        // Specify the type of input expected; this, for ProjectSrc, sets the input as a password, and will mask the text
+
         builder.setView(viewInflated);
 
         builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -302,7 +363,6 @@ public class MainActivity extends AppCompatActivity
             public void onClick(DialogInterface dialogInterface, int i)
             {
                 Intent intent = new Intent(MainActivity.this, BluetoothSearch.class);
-                //intent.putExtra("data", dataList);
                 startActivityForResult(intent, BLUETOOTH_REQUEST_CODE);
                 input.setText(string);
 
@@ -313,11 +373,40 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
+     * Message de redimensionnement d'une image Bitmap
+     */
+    public static Bitmap scaleBitmap(Bitmap bitmap, int wantedWidth, int wantedHeight)
+    {
+        Bitmap output = Bitmap.createBitmap(wantedWidth, wantedHeight, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(output);
+        Matrix m = new Matrix();
+        m.setScale((float) wantedWidth / bitmap.getWidth(), (float) wantedHeight / bitmap.getHeight());
+        canvas.drawBitmap(bitmap, m, new Paint());
+
+        return output;
+    }
+
+    /**
      * Message du resultat de l'impression
      * @param statue est un boolean false si il y'a eu des erreurs dans l'impression
      */
     private void messageEnd(boolean statue)
     {
         Toast.makeText(this, (statue ? "impression en cours" : "erreur de connexion"), Toast.LENGTH_LONG).show();
+    }
+
+    public void openPdf(String filename)
+    {
+        File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +"/PDF FOLDER/"+ filename);
+        Intent target = new Intent(Intent.ACTION_VIEW);
+        target.setDataAndType(Uri.fromFile(file),"application/pdf");
+        target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+        Intent intent = Intent.createChooser(target, "Open File");
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+
+        }
     }
 }
