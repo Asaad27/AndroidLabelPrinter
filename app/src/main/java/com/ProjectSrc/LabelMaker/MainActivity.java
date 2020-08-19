@@ -314,6 +314,7 @@ public class MainActivity extends AppCompatActivity
 
     /**
      * Cette methode transforme le reyclerView en Bitmap et l'envoie à l'imprimante
+     *
      */
     @SuppressLint("SetTextI18n")
     public void printBitmap(MenuItem item)
