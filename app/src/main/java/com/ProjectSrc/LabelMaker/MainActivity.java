@@ -269,13 +269,20 @@ public class MainActivity extends AppCompatActivity
         elongeur = (EditText)findViewById(R.id.longeur);
         elargeur = (EditText)findViewById(R.id.largeur);
         Bitmap cs = getScreenshotFromRecyclerView(rvDataList);
-
-        String slongeur = elongeur.getText().toString();
-        String slargeur =   elargeur.getText().toString();
-        int length = Integer.parseInt(elongeur.getText().toString());
-        int width = Integer.parseInt(elargeur.getText().toString());
-        if (length != 0 && width != 0)
-            cs = scaleBitmap(cs, width, length);
+        int length = 0, width = 0;
+        try
+        {
+            String slongeur = elongeur.getText().toString();
+            String slargeur = elargeur.getText().toString();
+            length = Integer.parseInt(elongeur.getText().toString());
+            width = Integer.parseInt(elargeur.getText().toString());
+            if (length != 0 && width != 0)
+                cs = scaleBitmap(cs, width, length);
+        }
+        catch (NumberFormatException e)
+        {
+            Toast.makeText(this, "longeur et largeurs invalides", Toast.LENGTH_LONG).show();
+        }
 
         PdfDocument pdfDocument = new PdfDocument();
         PdfDocument.PageInfo pi = new PdfDocument.PageInfo.Builder(cs.getWidth(), cs.getHeight(), 1).create();

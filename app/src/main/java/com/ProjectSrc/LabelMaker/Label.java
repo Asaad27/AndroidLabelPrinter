@@ -19,6 +19,7 @@ public class Label implements Serializable
 
     /**
      *Constructeur sans barcode
+     * @param type 0 pour codebar, 1 pour layout1 ... 5 pour layout5
      *@param titles les titres du champ
      *@param userTexts les textes de chaque titre
      */
