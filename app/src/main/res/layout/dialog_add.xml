@@ -28,6 +28,7 @@
 
         </RelativeLayout>
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -57,7 +58,7 @@
                     android:layout_marginRight="160dp"
                     android:layout_toLeftOf="@id/addButton"
                     android:inputType="textMultiLine|textPersonName|textImeMultiLine|textCapWords"
-                    android:text="@string/titre"
+                    android:text="Champ"
                     tools:ignore="UnknownId" />
 
                 <EditText
@@ -69,7 +70,7 @@
                     android:layout_toStartOf="@+id/addButton"
                     android:ems="10"
                     android:inputType="textMultiLine|textPersonName|textImeMultiLine|textCapWords"
-                    android:text="@string/texte" />
+                    android:text="Informations" />
 
             </RelativeLayout>
 

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.intermec.print.PrinterException;
 import com.intermec.print.lp.LinePrinter;
 import com.intermec.print.lp.LinePrinterException;
 import com.intermec.print.lp.PrintProgressEvent;
@@ -23,7 +24,7 @@ public class PrintActivity extends Activity
     private LinePrinter  lp;
     private Bitmap bitmap;
     private String uri;
-    private boolean connectStatue = true;
+    private boolean connectStatue = false;
     private Context context;
 
     public void createPrintTask(String uri, Bitmap bitmap, Context context)
@@ -61,7 +62,14 @@ public class PrintActivity extends Activity
         @Override
         protected Void doInBackground(Void... args)
         {
-            doPrint();
+            try
+            {
+                doPrint();
+            } catch (PrinterException e)
+            {
+                e.printStackTrace();
+                connectStatue = false;
+            }
             return null;
         }
 
@@ -97,7 +105,7 @@ public class PrintActivity extends Activity
             }
         }
 
-        private void doPrint()
+        private void doPrint() throws PrinterException
         {
             LinePrinter.ExtraSettings exSettings = new LinePrinter.ExtraSettings();
             exSettings.setContext(PrintActivity.this);
@@ -132,11 +140,7 @@ public class PrintActivity extends Activity
                 Log.e(TAG, "doPrint: " + ex.getMessage());
                 connectStatue = false;
             }
-            catch (Exception ex)
-            {
-                Log.e(TAG, "doPrint: " + ex.getMessage());
-                connectStatue = false;
-            }
+
             finally
             {
                 if (lp != null)

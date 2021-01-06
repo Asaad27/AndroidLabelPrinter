@@ -26,4 +26,23 @@
     <string name="rechercher">Rechercher</string>
     <string name="statue">Statue</string>
     <string name="etat">Etat</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="longeur_de_l_etiquette">Longeur de l\'etiquette</string>
+    <string name="px">px</string>
+    <string name="largeur_de_l_etiquette">largeur de l\'etiquette</string>
 </resources>

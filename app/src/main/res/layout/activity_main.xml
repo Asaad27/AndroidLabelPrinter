@@ -11,27 +11,32 @@
     tools:context=".MainActivity">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
-    <EditText
-        android:id="@+id/longeur"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_weight="1"
-        android:text="longuer"
-        android:inputType="number">
-    </EditText>
+        android:layout_height="150dp"
+        android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/largeur"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_weight="1"
-        android:text="largeur"
-        android:inputType="number"/>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            app:srcCompat="@drawable/e_acta" />
+
+        <Button
+            android:id="@+id/buttonTotal"
+            android:layout_width="match_parent"
+
+            android:layout_height="40dp"
+            android:text="Calculer Total"
+            android:onClick="buttonComputeSum"/>
+
+        <Button
+            android:id="@+id/buttonSettings"
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content"
+            android:text="Mise en page"
+            android:onClick="buttonMiseEnPage"/>
+
     </LinearLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvContacts"
         android:layout_width="match_parent"

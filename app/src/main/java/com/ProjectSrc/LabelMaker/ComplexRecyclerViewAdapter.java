@@ -1,6 +1,8 @@
 package com.ProjectSrc.LabelMaker;
 
 import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,6 +106,16 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         vh5.getField53().setText(Html.fromHtml(dataList.getFormattedAll(position, 2)));
         vh5.getField54().setText(Html.fromHtml(dataList.getFormattedAll(position, 3)));
         vh5.getField55().setText(Html.fromHtml(dataList.getFormattedAll(position, 4)));
+        vh5.getField51().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh5.getField51().setTextSize(MainActivity.tailleTexte);
+        vh5.getField52().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh5.getField52().setTextSize(MainActivity.tailleTexte);
+        vh5.getField53().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh5.getField53().setTextSize(MainActivity.tailleTexte);
+        vh5.getField54().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh5.getField54().setTextSize(MainActivity.tailleTexte);
+        vh5.getField55().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh5.getField55().setTextSize(MainActivity.tailleTexte);
     }
 
     @SuppressLint("SetTextI18n")
@@ -113,6 +125,14 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         vh4.getField42().setText(Html.fromHtml(dataList.getFormattedAll(position, 1)));
         vh4.getField43().setText(Html.fromHtml(dataList.getFormattedAll(position, 2)));
         vh4.getField44().setText(Html.fromHtml(dataList.getFormattedAll(position, 3)));
+        vh4.getField41().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh4.getField41().setTextSize(MainActivity.tailleTexte);
+        vh4.getField42().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh4.getField42().setTextSize(MainActivity.tailleTexte);
+        vh4.getField43().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh4.getField43().setTextSize(MainActivity.tailleTexte);
+        vh4.getField44().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh4.getField44().setTextSize(MainActivity.tailleTexte);
     }
 
     @SuppressLint("SetTextI18n")
@@ -121,6 +141,12 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         vh3.getField31().setText(Html.fromHtml(dataList.getFormattedAll(position, 0)));
         vh3.getField32().setText(Html.fromHtml(dataList.getFormattedAll(position, 1)));
         vh3.getField33().setText(Html.fromHtml(dataList.getFormattedAll(position, 2)));
+        vh3.getField31().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh3.getField31().setTextSize(MainActivity.tailleTexte);
+        vh3.getField32().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh3.getField32().setTextSize(MainActivity.tailleTexte);
+        vh3.getField33().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh3.getField33().setTextSize(MainActivity.tailleTexte);
     }
 
     @SuppressLint("SetTextI18n")
@@ -128,6 +154,10 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     {
         vh2.getField21().setText(Html.fromHtml(dataList.getFormattedAll(position, 0)));
         vh2.getField22().setText(Html.fromHtml(dataList.getFormattedAll(position, 1)));
+        vh2.getField21().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh2.getField21().setTextSize(MainActivity.tailleTexte);
+        vh2.getField22().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh2.getField22().setTextSize(MainActivity.tailleTexte);
 
     }
 
@@ -136,6 +166,8 @@ public class ComplexRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     {
         vh1.getField1().setText(Html.fromHtml(dataList.getFormattedTitle(position, 0)));
         vh1.getField1().append("          " + dataList.getSimpleUserText(position, 0));
+        vh1.getField1().setTextColor(ColorStateList.valueOf(Color.parseColor(MainActivity.listeCouleurs[MainActivity.couleurTexte])));
+        vh1.getField1().setTextSize(MainActivity.tailleTexte);
     }
 
     private void configureViewHolder(ViewHolder vh, int position)

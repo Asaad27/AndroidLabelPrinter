@@ -1,6 +1,7 @@
 package com.ProjectSrc.LabelMaker;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -25,6 +26,7 @@ import android.graphics.Paint;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.LruCache;
@@ -36,12 +38,17 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Objects;
 
 import static androidx.recyclerview.widget.DividerItemDecoration.VERTICAL;
@@ -59,20 +66,26 @@ public class MainActivity extends AppCompatActivity
     private static final String TAG = "log";
     private static final int BARCODE_REQUEST_CODE = 0;
     private static final int BLUETOOTH_REQUEST_CODE = 7 ;
+    public static int longeur = 500, largeur = 400, tailleTexte = 17;
+    public static int couleurTexte = 0;
+    public static String[] listeCouleurs = {"#000000", "#1369f7", "#ff0000"};
     private Dialog mDialog;
-    private EditText elongeur, elargeur;
+   // private EditText elongeur, elargeur;
     private static DataList dataList;
     private String uri;
     private Bitmap screenBitmap;
     private String string = "xx:xx:xx:xx:xx:xx";
+    private TextView tv;
 
 
     public static ComplexRecyclerViewAdapter complexRecyclerViewAdapter;
     private RecyclerView rvDataList;
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @SuppressLint({"SetTextI18n", "ResourceType"})
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+
         super.onCreate(savedInstanceState);
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
@@ -103,6 +116,13 @@ public class MainActivity extends AppCompatActivity
         rvDataList.addItemDecoration(itemDecor);
         this.configureOnClickRecyclerView();
         mDialog = new Dialog(this);
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        System.out.println(formatter.format(date));
+        String[] dateT = {formatter.format(date)};
+        String[] dateTitle = {""};
+        dataList.addNode(1, dateTitle, dateT);
+        complexRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     private void configureOnClickRecyclerView()
@@ -266,18 +286,19 @@ public class MainActivity extends AppCompatActivity
     }
     public void toPdf(MenuItem item)
     {
-        elongeur = (EditText)findViewById(R.id.longeur);
-        elargeur = (EditText)findViewById(R.id.largeur);
+        //elongeur = (EditText)findViewById(R.id.longeur);
+        //elargeur = (EditText)findViewById(R.id.largeur);
         Bitmap cs = getScreenshotFromRecyclerView(rvDataList);
-        int length = 0, width = 0;
+        //int length = 0, width = 0;
         try
         {
-            String slongeur = elongeur.getText().toString();
-            String slargeur = elargeur.getText().toString();
-            length = Integer.parseInt(elongeur.getText().toString());
-            width = Integer.parseInt(elargeur.getText().toString());
-            if (length != 0 && width != 0)
-                cs = scaleBitmap(cs, width, length);
+            //String slongeur = elongeur.getText().toString();
+            //String slargeur = elargeur.getText().toString();
+            //length = Integer.parseInt(elongeur.getText().toString());
+            //width = Integer.parseInt(elargeur.getText().toString());
+
+            if (longeur != 0 && largeur != 0)
+                cs = scaleBitmap(cs, longeur, largeur);
         }
         catch (NumberFormatException e)
         {
@@ -326,17 +347,17 @@ public class MainActivity extends AppCompatActivity
     @SuppressLint("SetTextI18n")
     public void printBitmap(MenuItem item)
     {
-        elongeur = (EditText)findViewById(R.id.longeur);
-        elargeur = (EditText)findViewById(R.id.largeur);
+        //elongeur = (EditText)findViewById(R.id.longeur);
+        //elargeur = (EditText)findViewById(R.id.largeur);
         screenBitmap = getScreenshotFromRecyclerView(rvDataList);
 
-        String slongeur = elongeur.getText().toString();
-        String slargeur =  elargeur.getText().toString();
+        //String slongeur = elongeur.getText().toString();  ici
+        //String slargeur =  elargeur.getText().toString();
 
-        int length = Integer.parseInt(elongeur.getText().toString());
-        int width = Integer.parseInt(elargeur.getText().toString());
-        if (length != 0 && width != 0)
-            screenBitmap = scaleBitmap(screenBitmap, width, length);
+        //int length = Integer.parseInt(elongeur.getText().toString());
+        //int width = Integer.parseInt(elargeur.getText().toString());
+        if (longeur != 0 && largeur != 0)
+            screenBitmap = scaleBitmap(screenBitmap, longeur, largeur);
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -381,7 +402,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     /**
-     * Message de redimensionnement d'une image Bitmap
+     * Methode de redimensionnement d'une image Bitmap
      */
     public static Bitmap scaleBitmap(Bitmap bitmap, int wantedWidth, int wantedHeight)
     {
@@ -400,7 +421,7 @@ public class MainActivity extends AppCompatActivity
      */
     private void messageEnd(boolean statue)
     {
-        Toast.makeText(this, (statue ? "impression en cours" : "erreur de connexion"), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, (statue ? "connexion impossible" : "erreur de connexion"), Toast.LENGTH_LONG).show();
     }
 
     public void openPdf(String filename)
@@ -414,7 +435,62 @@ public class MainActivity extends AppCompatActivity
         try {
             startActivity(intent);
         } catch (ActivityNotFoundException e) {
-
+            System.out.println("exception " + e);
         }
+    }
+
+    public static boolean isNumeric(String strNum)
+    {
+        if (strNum == null)
+        {
+            return false;
+        }
+        try
+        {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
+    }
+
+    @SuppressLint("ShowToast")
+    public void buttonComputeSum(View view)
+    {
+        int n = dataList.getSize();
+        if (n == 1)
+        {
+            Toast.makeText(this, "Pas d'element dans la liste", Toast.LENGTH_LONG);
+            return;
+        }
+        double somme = 0;
+        for (int i = 1; i < n; i++)
+        {
+            int m = dataList.getType(i);
+            for (int k = 0; k < m; k++)
+            {
+
+                if(isNumeric(dataList.getSimpleUserText(i, k)) && dataList.getSimpleTitle(i, k).equalsIgnoreCase("Prix"))
+                {
+                    somme +=  Double.parseDouble(dataList.getSimpleUserText(i, k));
+                }
+            }
+        }
+        if (somme != 0)
+        {
+            String[] titre = {"Total :"};
+            String[] total = {Double.toString(somme)};
+
+            dataList.insertNode(n, 1, titre, total);
+            complexRecyclerViewAdapter.notifyDataSetChanged();
+        }
+    }
+
+    public void buttonMiseEnPage(View view)
+    {
+        Intent intent = new Intent(this, SettingsActivity.class);
+        //intent.putExtra("data", dataList);
+        startActivity(intent);
+
     }
 }

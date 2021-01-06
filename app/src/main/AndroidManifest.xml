@@ -14,9 +14,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.ProjectSrc.LabelMaker.BluetoothSearch"></activity>
-        <activity android:name="com.ProjectSrc.LabelMaker.BareCode" />
-        <activity android:name="com.ProjectSrc.LabelMaker.MainActivity">
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
+        <activity android:name=".BluetoothSearch" />
+        <activity android:name=".BareCode" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
